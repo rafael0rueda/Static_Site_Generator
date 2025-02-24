@@ -1,5 +1,5 @@
 import unittest
-from delimiter import split_nodes_delimiter
+from markdown_oneline import split_nodes_delimiter
 
 from textnode import TextNode, TextType
 
@@ -62,7 +62,6 @@ class TestInlineMarkdown(unittest.TestCase):
     def test_delim_bold_and_italic(self):
         node = TextNode("**bold** and *italic*", TextType.NORMAL)
         new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
-        #new_nodes = split_nodes_delimiter(new_nodes, "*", TextType.ITALIC)
         self.assertListEqual(
             [
                 TextNode("bold", TextType.BOLD),
