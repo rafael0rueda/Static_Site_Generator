@@ -7,6 +7,9 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         raise Exception("Invalid delimiter")
     new_list = []
     for old_node in old_nodes:
+        if old_node.text_type == TextType.IMAGES or old_node. text_type == TextType.LINKS:
+            new_list.append(old_node)
+            continue
         tmp_lst = re.split(r"(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)", old_node.text)
         tmp_lst = [part for part in tmp_lst if part] # remove empty strings from the list
         for e in tmp_lst:
@@ -80,9 +83,20 @@ def split_nodes_link(old_nodes):
             sections = copy_text.split(f"[{link[0]}]({link[1]})",1)
             if sections[0] != "":
                 new_nodes.append(TextNode(sections[0], TextType.NORMAL))
-            new_nodes.append(TextNode(links[0], TextType.LINKS, link[1]))
+            new_nodes.append(TextNode(link[0], TextType.LINKS, link[1]))
             copy_text = sections[1]
         if copy_text != "":
             new_nodes.append(TextNode(copy_text, TextType.NORMAL))
 
     return new_nodes
+
+def text_to_textnodes(text):
+    text_node = TextNode(text, TextType.NORMAL) 
+    text_node = split_nodes_image([text_node])
+    text_node = split_nodes_link(text_node)
+    text_node = split_nodes_delimiter(text_node, "*", TextType.NORMAL)
+    
+    return text_node
+
+#test = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+#text_to_textnodes(test)
