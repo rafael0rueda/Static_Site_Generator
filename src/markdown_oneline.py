@@ -66,7 +66,6 @@ def split_nodes_image(old_nodes):
                 new_nodes.append(TextNode(sections[0], TextType.NORMAL))
             new_nodes.append(TextNode(image[0], TextType.IMAGES, image[1]))
             copy_text = sections[1]
-            #print(copy_text)
         if copy_text != "":
              new_nodes.append(TextNode(copy_text, TextType.NORMAL))
     return new_nodes
@@ -97,6 +96,3 @@ def text_to_textnodes(text):
     text_node = split_nodes_delimiter(text_node, "*", TextType.NORMAL)
     
     return text_node
-
-#test = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
-#text_to_textnodes(test)
