@@ -71,9 +71,9 @@ def block_to_html_node(block):
         return heading_to_html_node(block)
     if block_type == BlockType.CODE:
         return code_to_html_node(block)
-    if block_type == BlockType.OLIST:
+    if block_type == BlockType.ORDERED_LIST:
         return olist_to_html_node(block)
-    if block_type == BlockType.ULIST:
+    if block_type == BlockType.UNORDERED_LIST:
         return ulist_to_html_node(block)
     if block_type == BlockType.QUOTE:
         return quote_to_html_node(block)
@@ -114,7 +114,7 @@ def code_to_html_node(block):
     if not block.startswith("```") or not block.endswith("```"):
         raise ValueError("invalid code block")
     text = block[4:-3]
-    raw_text_node = TextNode(text, TextType.TEXT)
+    raw_text_node = TextNode(text, TextType.NORMAL)
     child = text_node_to_html_node(raw_text_node)
     code = ParentNode("code", [child])
     return ParentNode("pre", [code])
@@ -151,12 +151,9 @@ def quote_to_html_node(block):
     children = text_to_children(content)
     return ParentNode("blockquote", children)
 
-# test = """
-# This is **bolded** paragraph
-# text in a p
-# tag here
-
-# This is another paragraph with _italic_ text and `code` here
-
-# """
-# markdown_to_html_node(test)
+def extract_title(markdown):
+    copy_md = markdown.strip()
+    lines = copy_md.split("\n")    
+    if "#" in lines[0]:
+         return lines[0].replace("#", "")
+    raise Exception("Error markdown: It is not a title")
