@@ -150,7 +150,7 @@ def quote_to_html_node(block):
              new_lines.append(" ")
         else:
             new_lines.append(line.lstrip(">").strip())
-        print(new_lines)
+        # print(new_lines)
     content = "".join(new_lines)
     children = text_to_children(content)
     return ParentNode("blockquote", children)
