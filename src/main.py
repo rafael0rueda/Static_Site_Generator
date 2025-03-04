@@ -7,7 +7,7 @@ from generate_content import generate_pages_recursive
 
 def main():
     src_dir = "./content/"
-    dest_dir = "./public/"
+    dest_dir = "./docs/"
     template = "./template.html"
     static = "./static"
 
