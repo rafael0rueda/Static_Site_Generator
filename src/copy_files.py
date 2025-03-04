@@ -13,8 +13,9 @@ def delete_files_in_directory(directory_path):
     return
 
 def clean_copy_directory(dir_src, dir_dest):
+    print("Deleting public directory...")
     delete_files_in_directory(dir_dest)
-    
+    print("Copy to public directory...")
     files = os.listdir(dir_src)
     for file in files:
         s = os.path.join(dir_src, file)
